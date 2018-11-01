@@ -36,7 +36,7 @@ app.use(function(err, req, res, next) {
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/mevn-chat', { promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb://darran-blacky:DarranB10@ds247223.mlab.com:47223/chatapp', { promiseLibrary: require('bluebird') })
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
   
