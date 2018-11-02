@@ -1,11 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
-var Chat = require('../models/Chat.js');
+var express   = require('express');
+var router    = express.Router();
+var mongoose  = require('mongoose');
+var Chat      = require('../models/Chat.js');
 
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var app     = express();
+var server  = require('http').createServer(app);
+var io      = require('socket.io')(server);
+
 /* GET ALL CHATS */
 router.get('/', function(req, res, next) {
   Chat.find(function (err, products) {
@@ -14,13 +15,24 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/* GET ALL CHATS IN ROOM */
+router.get('/:roomid', function(req, res, next) {
+  console.log("Trying to find by room ID ....,",req.params.roomid);
+  Chat.find({ room: req.params.roomid }, function (err, products) {
+    if (err) return next(err);
+    res.json(products);
+  });
+});
+
 /* GET SINGLE CHAT BY ID */
 router.get('/:id', function(req, res, next) {
+  console.log("Trying to find by single chat ID ....,",req.params.id);
   Chat.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
+
 
 /* SAVE CHAT */
 router.post('/', function(req, res, next) {

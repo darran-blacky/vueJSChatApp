@@ -1,14 +1,11 @@
-
-
-
 <template>
   <b-row>
     <b-col cols="12">
       <h2>
-        Chat Room
+        Chat Room - <b-btn size="sm" @click.stop="logout()">Logout</b-btn>
       </h2>
-     <b-list-group class="panel-body" v-chat-scroll>
-        <b-list-group-item class="chat" v-for="item in chats">
+      <b-list-group class="panel-body">
+        <b-list-group-item v-for="(item, index) in chats" class="chat">
           <div class="left clearfix" v-if="item.nickname === nickname">
             <b-img left src="http://placehold.it/50/55C1E7/fff&text=ME" rounded="circle" width="75" height="75" alt="img" class="m-1" />
             <div class="chat-body clearfix">
@@ -49,16 +46,16 @@
 </template>
 
 <script>
-
-import axios from 'axios'
 import Vue from 'vue'
 import * as io from 'socket.io-client'
 import VueChatScroll from 'vue-chat-scroll'
 Vue.use(VueChatScroll)
 
+import axios from 'axios'
+
 export default {
   name: 'ChatRoom',
- data () {
+  data () {
   return {
     chats: [],
     errors: [],
@@ -67,24 +64,27 @@ export default {
     socket: io('http://localhost:4000')
   }
 },
-created () {
-     console.log("CHAT Room ID = ",this.$route.params.id);
-  axios.get(`http://localhost:3000/api/chat/` + this.$route.params.id)
-  .then(response => {
-      console.log("CHAT DB = ",response);
-    this.chats = response.data
-  })
-  .catch(e => {
-    this.errors.push(e)
-  })
+  created () {  //this.$route.params.id
+    // console.log("On CREATED ... routes.params.id  = ", this.$route.params.id);
 
-  this.socket.on('new-message', function (data) {
+    axios.get(`http://localhost:3000/api/chat/` + this.$route.params.id)
+    .then(response => {
+        // console.log("chats = ", response.data);
+      this.chats = response.data
+    })
+    .catch(e => {
+        // console.log("Error: ", e);
+      this.errors.push(e)
+    })
+
+
+     this.socket.on('new-message', function (data) {
     if(data.message.room === this.$route.params.id) {
       this.chats.push(data.message)
     }
   }.bind(this))
-},
- methods: {
+  },
+  methods: {
   logout () {
     this.socket.emit('save-message', { room: this.chat.room, nickname: this.chat.nickname, message: this.chat.nickname + ' left this room', created_date: new Date() });
     this.$router.push({
@@ -95,7 +95,11 @@ created () {
     evt.preventDefault()
     this.chat.room = this.$route.params.id
     this.chat.nickname = this.$route.params.nickname
-    axios.post(`http://localhost:3000/api/chat`, this.chat)
+    // console.log("THIS CHAT == ", this.chat);
+    // console.log("THIS CHAT.ID == ", this.chat.id);
+    // console.log("THIS CHAT.ROOM == ", this.chat.room);
+    
+    axios.post(`http://localhost:3000/api/chat/`, this.chat)
     .then(response => {
       this.socket.emit('save-message', response.data)
       this.chat.message = ''
