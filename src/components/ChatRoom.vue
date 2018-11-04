@@ -95,9 +95,7 @@ export default {
     evt.preventDefault()
     this.chat.room = this.$route.params.id
     this.chat.nickname = this.$route.params.nickname
-    // console.log("THIS CHAT == ", this.chat);
-    // console.log("THIS CHAT.ID == ", this.chat.id);
-    // console.log("THIS CHAT.ROOM == ", this.chat.room);
+    
     
     axios.post(`http://localhost:3000/api/chat/`, this.chat)
     .then(response => {
