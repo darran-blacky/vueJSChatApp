@@ -64,16 +64,13 @@ export default {
     socket: io('http://localhost:4000')
   }
 },
-  created () {  //this.$route.params.id
-    // console.log("On CREATED ... routes.params.id  = ", this.$route.params.id);
+  created () {  
 
     axios.get(`http://localhost:3000/api/chat/` + this.$route.params.id)
     .then(response => {
-        // console.log("chats = ", response.data);
       this.chats = response.data
     })
     .catch(e => {
-        // console.log("Error: ", e);
       this.errors.push(e)
     })
 
