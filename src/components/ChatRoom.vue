@@ -72,6 +72,7 @@ export default {
     })
     .catch(e => {
       this.errors.push(e)
+      //
     })
 
 
