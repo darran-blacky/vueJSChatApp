@@ -61,12 +61,12 @@ export default {
     errors: [],
     nickname: this.$route.params.nickname,
     chat: {},
-    socket: io('https://mfhserver.herokuapp.com:4000')
+    socket: io('https://chatyard.herokuapp.com:4000')
   }
 },
   created () {  
 
-    axios.get(`http://localhost:3000/api/chat/` + this.$route.params.id)
+    axios.get(`https://chatyard.herokuapp.com/api/chat/` + this.$route.params.id)
     .then(response => {
       this.chats = response.data
     })
@@ -95,7 +95,7 @@ export default {
     this.chat.nickname = this.$route.params.nickname
     
     
-    axios.post(`http://localhost:3000/api/chat/`, this.chat)
+    axios.post(`https://chatyard.herokuapp.com/api/chat/`, this.chat)
     .then(response => {
       this.socket.emit('save-message', response.data)
       this.chat.message = ''

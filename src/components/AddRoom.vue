@@ -35,7 +35,7 @@ export default {
   methods: {
     onSubmit (evt) {
       evt.preventDefault()
-      axios.post(`https://mfhserver.herokuapp.com/api/room`, this.room)
+      axios.post(`https://chatyard.herokuapp.com/api/room`, this.room)
       .then(response => {
         this.$router.push({
           name: 'RoomList'
