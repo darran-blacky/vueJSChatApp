@@ -61,7 +61,7 @@ export default {
     errors: [],
     nickname: this.$route.params.nickname,
     chat: {},
-    socket: io('https://chatyard.herokuapp.com:4000')
+    socket: io('https://chatyard.herokuapp.com')
   }
 },
   created () {  
