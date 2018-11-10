@@ -38,7 +38,7 @@ export default {
     }
   },
   created () {
-    axios.get(`http://localhost:3000/api/room`)
+    axios.get(`https://chatyard.herokuapp.com/api/room`)
     .then(response => {
       this.rooms = response.data
       console.log(this.rooms);

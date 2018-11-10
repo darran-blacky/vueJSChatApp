@@ -37,7 +37,7 @@ data () {
       evt.preventDefault()
       this.chat.room = this.$route.params.id
       this.chat.message = this.chat.nickname + ' join the room'
-        axios.post(`https://mfhserver.herokuapp.com/api/chat`, this.chat)
+        axios.post(`https://chatyard.herokuapp.com/api/chat`, this.chat)
         .then(response => {
         this.socket.emit('save-message', { room: this.chat.room, nickname: this.chat.nickname, message: 'has joined this room', created_date: new Date() });
         this.$router.push({
