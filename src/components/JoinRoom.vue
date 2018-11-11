@@ -29,7 +29,7 @@ export default {
 data () {
   return {
     chat: {},
-    socket: io('http://localhost:4000')
+    socket: io('https://chatyard.herokuapp.com')
   }
 },
   methods: {
